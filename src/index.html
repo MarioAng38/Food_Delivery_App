@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery App</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Food Delivery App</h1>
+    <span class="user">Logged in as <strong>mario.angelescu</strong></span>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>New order</h2>
+      <form class="order-form">
+        <input type="text" placeholder="What are you ordering? (e.g. Pizza Margherita x2)" maxlength="100" required>
+        <select aria-label="Payment method">
+          <option>CARD_ONLINE</option>
+          <option>CASH_ON_DELIVERY</option>
+          <option>APPLE_PAY</option>
+        </select>
+        <select aria-label="Restaurant">
+          <option>Pizza Napoli</option>
+          <option>Sushi Zen</option>
+          <option>Burger House</option>
+        </select>
+        <button type="submit">Add order</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="list-header">
+        <h2>My orders</h2>
+        <div class="filters">
+          <button class="chip active">All</button>
+          <button class="chip">Active</button>
+          <button class="chip">Delivered</button>
+        </div>
+      </div>
+
+      <ul class="order-list">
+        <li class="order">
+          <input type="checkbox" aria-label="Mark as delivered">
+          <span class="name">Pizza Margherita x2</span>
+          <span class="tag">CARD_ONLINE</span>
+          <span class="restaurant">Pizza Napoli</span>
+        </li>
+        <li class="order done">
+          <input type="checkbox" checked aria-label="Mark as delivered">
+          <span class="name">Sushi Platter (24 pcs)</span>
+          <span class="tag">CASH_ON_DELIVERY</span>
+          <span class="restaurant">Sushi Zen</span>
+        </li>
+        <li class="order">
+          <input type="checkbox" aria-label="Mark as delivered">
+          <span class="name">Double Cheeseburger + Fries</span>
+          <span class="tag">APPLE_PAY</span>
+          <span class="restaurant">Burger House</span>
+        </li>
+      </ul>
+      <p class="summary">2 active · 1 delivered</p>
+    </section>
+  </main>
+</body>
+</html>
