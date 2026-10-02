@@ -21,7 +21,7 @@ Sample data used across all stages:
 
 ## How to run
 
-Open `index.html` in a browser. No build step, no server.
+Open `src/index.html` in a browser. No build step, no server.
 
 ## AI usage
 
