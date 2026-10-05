@@ -25,13 +25,14 @@ Open `src/index.html` in a browser. No build step, no server.
 
 ## AI usage
 
-| Tool        | Used for            |
-| ----------- | ------------------- |
-| Claude Code | Stage 1: CSS mockup |
+| Tool        | Used for                       |
+| ----------- | ------------------------------ |
+| Claude Code | Stage 1: CSS mockup            |
+| Claude Code | Stage 2: javascript data logic |
 
 Details per stage: see the ai-log/ folder.
 
 ## Status
 
 - [x] Stage 1: static mockup
-- [ ] Stage 2: data logic in JavaScript
+- [x] Stage 2: data logic in JavaScript
