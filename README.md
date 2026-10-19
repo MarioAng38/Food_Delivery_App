@@ -40,3 +40,19 @@ Details per stage: see the ai-log/ folder.
 - [x] Stage 1: static mockup
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: The app now lives in `frontend/`, built with Vite. The data from stage 2 moved into the main component; the list is still printed raw.
+- [x] Stage 4: The order list is rendered from data through reusable `OrderList` and `OrderCard` components.
+- [ ] Stage 5: local state and events
+
+## Stage 4: components
+
+`OrderList` receives the complete array and renders one `OrderCard` per order. `OrderCard` receives a single order through props and displays its name, delivery status, restaurant, and payment method. An empty array displays a message instead of a list.
+
+| ID    | Requirement                                  | Where                                   | How to check                              |
+| ----- | -------------------------------------------- | --------------------------------------- | ----------------------------------------- |
+| S4-R1 | At least two components in `src/components/` | `frontend/src/components/`              | Open the folder                           |
+| S4-R2 | Card receives data through props             | `frontend/src/components/OrderCard.tsx` | Read the `comanda` prop                   |
+| S4-R3 | List uses `map` and `key={id}`               | `frontend/src/components/OrderList.tsx` | Run the app and check the browser console |
+| S4-R4 | Empty list displays a message                | `frontend/src/components/OrderList.tsx` | Set `comenzi` to `[]`                     |
+| S4-R5 | Delivery state changes the card appearance   | `frontend/src/components/OrderCard.tsx` | Toggle the `delivered` value              |
+| S4-R6 | README and AI log updated                    | `README.md`, `ai-log/etapa-04.md`       | Read these files                          |
+| S4-R7 | Stage 4 commit published on GitHub           | Git history                             | Pending publication                       |
