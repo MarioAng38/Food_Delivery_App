@@ -55,4 +55,4 @@ Details per stage: see the ai-log/ folder.
 | S4-R4 | Empty list displays a message                | `frontend/src/components/OrderList.tsx` | Set `comenzi` to `[]`                     |
 | S4-R5 | Delivery state changes the card appearance   | `frontend/src/components/OrderCard.tsx` | Toggle the `delivered` value              |
 | S4-R6 | README and AI log updated                    | `README.md`, `ai-log/etapa-04.md`       | Read these files                          |
-| S4-R7 | Stage 4 commit published on GitHub           | Git history                             | Pending publication                       |
+| S4-R7 | Stage 4 commit published on GitHub           | Git history                             | Commits `ae30355` and `0e98fca` pushed to `main` |

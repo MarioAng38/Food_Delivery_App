@@ -18,4 +18,4 @@ Extract the order item and order list into reusable React components, keep the e
 ## Validation
 
 - `npm run build` in `frontend/`: passed.
-- GitHub publication and the Stage 4 commit are pending.
+- Commits `ae30355` (`Stage 4: components rendered from data`) and `0e98fca` (`Stage 4: checklist`) were pushed to `main`.
