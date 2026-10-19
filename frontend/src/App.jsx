@@ -1,3 +1,5 @@
+import OrderList from "./components/OrderList.tsx";
+
 const comenzi = [
 	{ id: 1, name: "Pizza Margherita x2", delivered: false, payment_method: "CARD_ONLINE", restaurant: "Pizza Napoli" },
 	{ id: 2, name: "Sushi Platter (24 pcs)", delivered: true, payment_method: "CASH_ON_DELIVERY", restaurant: "Sushi Zen" },
@@ -21,21 +23,7 @@ export default function App() {
               {comenzi.length} comenzi, dintre care {active} nelivrate
             </p>
           </div>
-          <ul className="order-list">
-            {comenzi.map((comanda) => (
-              <li
-                className={comanda.delivered ? "order done" : "order"}
-                key={comanda.id}
-              >
-                <span className="name">{comanda.name}</span>
-                <span className="tag">
-                  {comanda.delivered ? "Livrată" : "În livrare"}
-                </span>
-                <span className="restaurant">{comanda.restaurant}</span>
-                <span className="tag">{comanda.payment_method}</span>
-              </li>
-            ))}
-          </ul>
+          <OrderList comenzi={comenzi} />
         </section>
       </main>
     </>
