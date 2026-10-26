@@ -31,6 +31,7 @@ export default function OrderCard({ comanda, onToggle, onDelete }: OrderCardProp
 			<button
 				type="button"
 				className="btn-danger"
+				aria-label={`Sterge comanda ${comanda.name}`}
 				onClick={() => onDelete(comanda.id)}
 			>
 				Șterge
