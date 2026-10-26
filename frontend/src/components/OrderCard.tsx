@@ -6,15 +6,35 @@ export type Order = {
 	restaurant: string;
 };
 
-export default function OrderCard({ comanda }: { comanda: Order }) {
+type OrderCardProps = {
+	comanda: Order;
+	onToggle: (id: number) => void;
+	onDelete: (id: number) => void;
+};
+
+export default function OrderCard({ comanda, onToggle, onDelete }: OrderCardProps) {
 	return (
 		<li className={comanda.delivered ? "order done" : "order"}>
-			<span className="name">{comanda.name}</span>
+			<label className="task-main">
+				<input
+					type="checkbox"
+					checked={comanda.delivered}
+					onChange={() => onToggle(comanda.id)}
+				/>
+				<span className="name">{comanda.name}</span>
+			</label>
 			<span className="tag">
 				{comanda.delivered ? "Livrată" : "În livrare"}
 			</span>
 			<span className="restaurant">{comanda.restaurant}</span>
 			<span className="tag">{comanda.payment_method}</span>
+			<button
+				type="button"
+				className="btn-danger"
+				onClick={() => onDelete(comanda.id)}
+			>
+				Șterge
+			</button>
 		</li>
 	);
 }

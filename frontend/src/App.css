@@ -4,13 +4,62 @@
   --yellow: #ffc244;
   --green: #00a082;
   --green-dark: #00775f;
-  --mint: #e0f5ef;
-  --cream: #fff4d6;
-  --brown: #8a5a00;
+  --accent: var(--green);
+  --mare: #c0392b;
   --text: #1f1f1f;
   --muted: #6b6b6b;
-  --line: #ececec;
+  --border: #ececec;
+  --line: var(--border);
+  --card: #ffffff;
+  --accent-soft: #e0f5ef;
+  --mint: var(--accent-soft);
+  --chip-hover: #c9ece2;
+  --cream: #fff4d6;
+  --brown: #8a5a00;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   --bg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #25231f;
+    --card: #302d27;
+    --text: #f5f0e5;
+    --muted: #c4bcad;
+    --border: #4b463c;
+    --accent: #48a17d;
+    --green: #287a5e;
+    --green-dark: #20664e;
+    --mare: #ee8171;
+    --accent-soft: #35483b;
+    --chip-hover: #415747;
+    --cream: #4a402d;
+    --brown: #f0d18a;
+    --shadow: none;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #25231f;
+  --card: #302d27;
+  --text: #f5f0e5;
+  --muted: #c4bcad;
+  --border: #4b463c;
+  --accent: #48a17d;
+  --green: #287a5e;
+  --green-dark: #20664e;
+  --mare: #ee8171;
+  --accent-soft: #35483b;
+  --chip-hover: #415747;
+  --cream: #4a402d;
+  --brown: #f0d18a;
+  --shadow: none;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -34,6 +83,22 @@ body {
   background: var(--yellow);
   border-radius: 0 0 50% 50% / 0 0 60px 60px;
 }
+.app-header { position: relative; }
+.user { margin-right: 148px; }
+.theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 6px 12px;
+  border: 1px solid rgba(31, 31, 31, 0.45);
+  border-radius: 8px;
+  background: transparent;
+  color: #1f1f1f;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.theme-toggle:hover { background: rgba(31, 31, 31, 0.08); }
 .topbar h1 {
   margin: 0;
   font-size: clamp(1.8rem, 5vw, 2.8rem);
@@ -59,10 +124,10 @@ body {
 }
 
 .card {
-  background: #fff;
+  background: var(--card);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
 }
 .card h2 { margin: 0 0 16px; font-size: 1.4rem; font-weight: 900; }
 
@@ -77,7 +142,7 @@ input[type="text"], select {
   padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--card);
   color: var(--text);
   font: inherit;
 }
@@ -116,7 +181,7 @@ button:hover { background: var(--green-dark); }
   color: var(--green-dark);
   font-weight: 700;
 }
-.chip:hover { background: #c9ece2; }
+.chip:hover { background: var(--chip-hover); }
 .chip.active { background: var(--green); color: #fff; }
 
 .order-list { list-style: none; margin: 0; padding: 0; }
@@ -129,9 +194,26 @@ button:hover { background: var(--green-dark); }
   border-bottom: 1px solid var(--line);
 }
 .order:last-child { border-bottom: none; }
-.order input { width: 20px; height: 20px; accent-color: var(--green); }
+.task-main { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.task-main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
 .order .name { flex: 1; min-width: 160px; font-weight: 700; }
 .order.done .name { text-decoration: line-through; color: var(--muted); font-weight: 600; }
+
+.btn-danger {
+  border: 1px solid var(--mare);
+  background: transparent;
+  color: var(--mare);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+.btn-danger:hover { background: var(--mare); color: #fff; }
 
 .tag, .restaurant {
   font-size: 0.8rem;
@@ -145,6 +227,6 @@ button:hover { background: var(--green-dark); }
 .summary { margin: 12px 0 0; color: var(--muted); font-size: 0.9rem; }
 
 @media (max-width: 560px) {
-  .topbar { padding: 24px 16px 100px; }
+  .topbar { padding: 56px 16px 100px; }
   .order-form { grid-template-columns: 1fr; }
 }
