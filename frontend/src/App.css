@@ -133,7 +133,7 @@ body {
   margin: -80px auto 48px;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 24px;
 }
 
@@ -301,7 +301,6 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
-
 /* Etapa 6: stări de încărcare și de eroare */
 .info {
   color: var(--muted);
@@ -312,4 +311,12 @@ button:hover {
   border: 1px solid var(--error-border);
   border-radius: 8px;
   padding: 10px 12px;
+}
+/* Etapa 7: buton dezactivat cât timp se trimite */
+.order-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.order-form input[aria-invalid="true"] {
+  border-color: var(--mare);
 }

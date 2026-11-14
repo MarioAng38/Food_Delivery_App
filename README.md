@@ -8,6 +8,7 @@ For customers who want to track what they ordered, how they paid, and which orde
 | Field          | Type         | Notes                                      |
 | -------------- | ------------ | ------------------------------------------ |
 | name           | text         | required, max 100 chars (what was ordered) |
+| quantity       | number       | positive whole number                      |
 | delivered      | boolean      | toggled from the list, default false       |
 | payment_method | fixed values | CARD_ONLINE, CASH_ON_DELIVERY, APPLE_PAY   |
 | restaurant     | relation     | Pizza Napoli, Sushi Zen, Burger House      |
@@ -23,11 +24,19 @@ Sample data used across all stages:
 
 ## How to run
 
+```sh
 cd frontend
 npm install
 npm run api
+```
+
 In a second terminal:
+
+```sh
+cd frontend
 npm run dev
+```
+
 Then open the address printed in the terminal (http://localhost:5173).
 
 ## AI usage
@@ -37,6 +46,7 @@ Then open the address printed in the terminal (http://localhost:5173).
 | Claude Code    | Stage 1: CSS mockup                    |
 | Claude Code    | Stage 2: javascript data logic         |
 | GitHub Copilot | Stage 6: API loading and documentation |
+| GitHub Copilot | Stage 7: Validation and test IDs       |
 
 Details per stage: see the ai-log/ folder.
 
@@ -48,6 +58,7 @@ Details per stage: see the ai-log/ folder.
 - [x] Stage 4: The order list is rendered from data through reusable `OrderList` and `OrderCard` components.
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
+- [x] Stage 7: validated order form and API persistence
 
 ## Stage 4: components
 
@@ -85,8 +96,8 @@ which is what stage 6 and stage 10 fix.
 
 Orders are served by json-server from `frontend/db.json`. The app requests
 `/initialComenzi` on mount and displays loading, success, or error feedback.
-Checking and deleting orders still update local state only; persistence is
-planned for Stage 7.
+Stage 7 adds order creation, delivery updates, and deletion through the same
+API resource; those changes persist across reloads.
 
 Run the API and app in separate terminals from the repository root:
 
@@ -106,9 +117,9 @@ The API is available at http://localhost:3001/initialComenzi. Set
 | ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                   |
 | ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/initialComenzi`       |
-| S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx#L5-L8`](./frontend/src/App.jsx#L5-L8), [`api.js`](./frontend/src/api.js)                                                          | Read the initial state and API call            |
-| S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx#L7-L7`](./frontend/src/App.jsx#L7-L7), [`App.jsx#L90-L90`](./frontend/src/App.jsx#L90-L90)                                        | Start API with `--delay 4000`                  |
-| S6-R4 | API failures show an actionable error             | [`App.jsx#L91-L96`](./frontend/src/App.jsx#L91-L96)                                                                                         | Stop the API and refresh                       |
+| S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                      | Read the initial state and API call            |
+| S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Start API with `--delay 4000`                  |
+| S6-R4 | API failures show an actionable error             | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Stop the API and refresh                       |
 | S6-R5 | Fetch is centralized and API URL is configurable  | [`api.js`](./frontend/src/api.js), [`.env.example`](./frontend/.env.example)                                                                | Search for `fetch`; only `api.js` should match |
 | S6-R6 | README checklist and AI log are present           | [`README.md#stage-6-loading-data-from-a-mock-api`](./README.md#stage-6-loading-data-from-a-mock-api), [`etapa-06.md`](./ai-log/etapa-06.md) | Read the stage section and AI log              |
 | S6-R7 | Stage 6 commit is published on GitHub             | [`d589d16`](https://github.com/MarioAng38/Food_Delivery_App/commit/d589d16e1a75f797b92d110b2aabfe3350984964)                                | Check commit history                           |
@@ -120,3 +131,45 @@ The API is available at http://localhost:3001/initialComenzi. Set
 - [x] S6-R5 Fetch is in `api.js` and the API URL can be configured
 - [x] S6-R6 README Stage 6 section and AI log are complete
 - [x] S6-R7 Stage 6 commit is published on GitHub
+
+## Stage 7: order form and API persistence
+
+The order form validates the title, quantity, and restaurant before creating
+an order. Create, delivery updates, and deletion use the `/initialComenzi`
+resource, so successful changes remain after a page reload. API failures are
+shown in the form or beside the order list.
+
+| ID    | Requirement                                    | Where (permalink)                                                                                                                                                                                                       | How to check                                 |
+| ----- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| S7-R1 | Form validates input and creates an order      | [`OrderForm.tsx`](./frontend/src/components/OrderForm.tsx), [`api.js`](./frontend/src/api.js)                                                                                                                           | Submit valid and invalid form values         |
+| S7-R2 | Delivery updates persist through the API       | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                                                                                                  | Toggle a delivery state, then reload         |
+| S7-R3 | Deleting an order persists through the API     | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                                                                                                  | Delete an order, then reload                 |
+| S7-R4 | Stable test IDs match the selector contract    | [`OrderCard.tsx`](./frontend/src/components/OrderCard.tsx), [`OrderList.tsx`](./frontend/src/components/OrderList.tsx), [`OrderForm.tsx`](./frontend/src/components/OrderForm.tsx), [`App.jsx`](./frontend/src/App.jsx) | Inspect the rendered DOM or query by test ID |
+| S7-R5 | Stage implementation and validation are logged | [`etapa-07.md`](./ai-log/etapa-07.md)                                                                                                                                                                                   | Read the AI log and validation results       |
+
+### Test IDs
+
+| Test ID               | Element                                        | Component   |
+| --------------------- | ---------------------------------------------- | ----------- |
+| `item`                | Order card (`li`), with `data-id={comanda.id}` | `OrderCard` |
+| `item-title`          | Order title                                    | `OrderCard` |
+| `item-toggle`         | Delivery checkbox                              | `OrderCard` |
+| `item-delete`         | Delete button                                  | `OrderCard` |
+| `empty`               | Empty-list message                             | `OrderList` |
+| `form`                | Order form                                     | `OrderForm` |
+| `form-title`          | Order title input                              | `OrderForm` |
+| `form-quantity`       | Quantity input                                 | `OrderForm` |
+| `form-delivered`      | Delivered checkbox                             | `OrderForm` |
+| `form-payment_method` | Payment method field                           | `OrderForm` |
+| `form-restaurant`     | Restaurant field                               | `OrderForm` |
+| `form-submit`         | Submit button                                  | `OrderForm` |
+| `form-error`          | Form validation or submission error            | `OrderForm` |
+| `loading`             | Initial loading message                        | `App`       |
+| `error`               | Initial API load error                         | `App`       |
+| `action-error`        | API mutation error                             | `App`       |
+
+- [x] S7-R1 Form validates values and creates orders through the API
+- [x] S7-R2 Delivery changes persist through the API
+- [x] S7-R3 Deletions persist through the API
+- [x] S7-R4 Test IDs follow the selector contract
+- [x] S7-R5 README and AI log document the implementation

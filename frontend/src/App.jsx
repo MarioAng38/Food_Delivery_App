@@ -1,11 +1,18 @@
-import { fetchComenzi } from "./api.js";
 import OrderList from "./components/OrderList.tsx";
 import { useEffect, useState } from "react";
+import OrderForm from "./components/OrderForm.tsx";
+import {
+  fetchComenzi,
+  createComanda,
+  updateComanda,
+  deleteComanda,
+} from "./api.js";
 
 export default function App() {
   const [comenzi, setComenzi] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [actionError, setActionError] = useState(null);
   const [tema, setTema] = useState(temaInitiala);
   const active = comenzi.filter((comanda) => !comanda.delivered).length;
 
@@ -44,13 +51,29 @@ export default function App() {
     };
   }, []);
 
-  function handleToggle(id) {
-    setComenzi((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, delivered: !t.delivered } : t))
-    );
+  async function handleToggle(id) {
+    const comanda = comenzi.find((t) => t.id === id);
+    if (!comanda) return;
+
+    try {
+      const actualizat = await updateComanda(id, {
+        delivered: !comanda.delivered,
+      });
+      setComenzi((prev) => prev.map((t) => (t.id === id ? actualizat : t)));
+      setActionError(null);
+    } catch (err) {
+      setActionError(`Nu am putut actualiza comanda: ${err.message}`);
+    }
   }
-  function handleDelete(id) {
-    setComenzi((prev) => prev.filter((t) => t.id !== id));
+
+  async function handleDelete(id) {
+    try {
+      await deleteComanda(id);
+      setComenzi((prev) => prev.filter((t) => t.id !== id));
+      setActionError(null);
+    } catch (err) {
+      setActionError(`Nu am putut șterge comanda: ${err.message}`);
+    }
   }
 
   function temaInitiala() {
@@ -65,6 +88,12 @@ export default function App() {
     document.documentElement.dataset.theme = noua;
   }
 
+  async function handleAdd(comanda) {
+    const creat = await createComanda(comanda);
+    setComenzi((prev) => [...prev, creat]);
+    setActionError(null);
+  }
+
   return (
     <>
       <header className="topbar app-header">
@@ -77,19 +106,31 @@ export default function App() {
           {tema === "dark" ? "Mod luminos" : "Mod întunecat"}
         </button>
         <h1>Food Delivery App</h1>
-        <p className="user">Comenzile mele</p>
       </header>
       <main className="container">
-        <section className="card">
+        <section className="panel">
+          <h2>Adaugă comanda</h2>
+          <OrderForm onAdd={handleAdd} />
+        </section>
+        <section className="panel">
           <div className="list-header">
-            <h2>Comenzi</h2>
+            <h2>Comenzile mele</h2>
             <p className="summary">
               {comenzi.length} comenzi, dintre care {active} nelivrate
             </p>
           </div>
-          {loading && <p className="info">Se încarcă...</p>}
+          {actionError && (
+            <p className="error" data-testid="action-error">
+              {actionError}
+            </p>
+          )}
+          {loading && (
+            <p className="info" data-testid="loading">
+              Se încarcă...
+            </p>
+          )}
           {error && (
-            <p className="error">
+            <p className="error" data-testid="error">
               Nu am putut încărca datele: {error}. Rulează{" "}
               <code>npm run api</code>?
             </p>
