@@ -103,15 +103,15 @@ npm run dev
 The API is available at http://localhost:3001/initialComenzi. Set
 `VITE_API_URL` in `frontend/.env` to override the default API address.
 
-| ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                      |
-| ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/initialComenzi`          |
-| S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx#L5-L8`](./frontend/src/App.jsx#L5-L8), [`api.js`](./frontend/src/api.js)                                                          | Read the initial state and API call               |
-| S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx#L7-L7`](./frontend/src/App.jsx#L7-L7), [`App.jsx#L90-L90`](./frontend/src/App.jsx#L90-L90)                                        | Start API with `--delay 4000`                     |
-| S6-R4 | API failures show an actionable error             | [`App.jsx#L91-L96`](./frontend/src/App.jsx#L91-L96)                                                                                         | Stop the API and refresh                          |
-| S6-R5 | Fetch is centralized and API URL is configurable  | [`api.js`](./frontend/src/api.js), [`.env.example`](./frontend/.env.example)                                                                | Search for `fetch`; only `api.js` should match    |
-| S6-R6 | README checklist and AI log are present           | [`README.md#stage-6-loading-data-from-a-mock-api`](./README.md#stage-6-loading-data-from-a-mock-api), [`etapa-06.md`](./ai-log/etapa-06.md) | Read the stage section and AI log                 |
-| S6-R7 | Stage 6 commit is published on GitHub             | Pending                                                                                                                                     | Not performed; commit and push were not requested |
+| ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                   |
+| ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/initialComenzi`       |
+| S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx#L5-L8`](./frontend/src/App.jsx#L5-L8), [`api.js`](./frontend/src/api.js)                                                          | Read the initial state and API call            |
+| S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx#L7-L7`](./frontend/src/App.jsx#L7-L7), [`App.jsx#L90-L90`](./frontend/src/App.jsx#L90-L90)                                        | Start API with `--delay 4000`                  |
+| S6-R4 | API failures show an actionable error             | [`App.jsx#L91-L96`](./frontend/src/App.jsx#L91-L96)                                                                                         | Stop the API and refresh                       |
+| S6-R5 | Fetch is centralized and API URL is configurable  | [`api.js`](./frontend/src/api.js), [`.env.example`](./frontend/.env.example)                                                                | Search for `fetch`; only `api.js` should match |
+| S6-R6 | README checklist and AI log are present           | [`README.md#stage-6-loading-data-from-a-mock-api`](./README.md#stage-6-loading-data-from-a-mock-api), [`etapa-06.md`](./ai-log/etapa-06.md) | Read the stage section and AI log              |
+| S6-R7 | Stage 6 commit is published on GitHub             | [`d589d16`](https://github.com/MarioAng38/Food_Delivery_App/commit/d589d16e1a75f797b92d110b2aabfe3350984964)                                | Check commit history                           |
 
 - [x] S6-R1 API starts and its resource route returns JSON
 - [x] S6-R2 Orders are not hard-coded in React
@@ -119,4 +119,4 @@ The API is available at http://localhost:3001/initialComenzi. Set
 - [x] S6-R4 An actionable error is rendered when the API is unavailable
 - [x] S6-R5 Fetch is in `api.js` and the API URL can be configured
 - [x] S6-R6 README Stage 6 section and AI log are complete
-- [ ] S6-R7 Stage 6 commit is published on GitHub
+- [x] S6-R7 Stage 6 commit is published on GitHub
