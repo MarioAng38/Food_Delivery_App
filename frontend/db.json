@@ -1,0 +1,39 @@
+{
+  "initialComenzi": [
+    {
+      "id": 1,
+      "name": "Pizza Margherita x2",
+      "delivered": false,
+      "payment_method": "CARD_ONLINE",
+      "restaurant": "Pizza Napoli"
+    },
+    {
+      "id": 2,
+      "name": "Sushi Platter (24 pcs)",
+      "delivered": true,
+      "payment_method": "CASH_ON_DELIVERY",
+      "restaurant": "Sushi Zen"
+    },
+    {
+      "id": 3,
+      "name": "Double Cheeseburger + Fries",
+      "delivered": false,
+      "payment_method": "APPLE_PAY",
+      "restaurant": "Burger House"
+    },
+    {
+      "id": 4,
+      "name": "Chicken Wrap Combo",
+      "delivered": false,
+      "payment_method": "CASH_ON_DELIVERY",
+      "restaurant": "Burger House"
+    },
+    {
+      "id": 5,
+      "name": "Vegetarian Ramen",
+      "delivered": true,
+      "payment_method": "CARD_ONLINE",
+      "restaurant": "Sushi Zen"
+    }
+  ]
+}

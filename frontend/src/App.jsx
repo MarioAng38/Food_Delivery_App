@@ -1,18 +1,35 @@
+import { fetchComenzi } from "./api.js";
 import OrderList from "./components/OrderList.tsx";
 import { useEffect, useState } from "react";
 
-const initialComenzi = [
-	{ id: 1, name: "Pizza Margherita x2", delivered: false, payment_method: "CARD_ONLINE", restaurant: "Pizza Napoli" },
-	{ id: 2, name: "Sushi Platter (24 pcs)", delivered: true, payment_method: "CASH_ON_DELIVERY", restaurant: "Sushi Zen" },
-	{ id: 3, name: "Double Cheeseburger + Fries", delivered: false, payment_method: "APPLE_PAY", restaurant: "Burger House" },
-];
-
 export default function App() {
-  const [comenzi, setComenzi] = useState(initialComenzi);
+  const [comenzi, setComenzi] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [tema, setTema] = useState(temaInitiala);
   const active = comenzi.filter((comanda) => !comanda.delivered).length;
 
   useEffect(() => {
+    let ignore = false;
+    async function loadComenzi() {
+      try {
+        const data = await fetchComenzi();
+        if (!ignore) {
+          setComenzi(data);
+        }
+      } catch (err) {
+        if (!ignore) {
+          setError(err.message);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadComenzi();
+
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleSystemThemeChange = (event) => {
       if (!document.documentElement.hasAttribute("data-theme")) {
@@ -21,7 +38,10 @@ export default function App() {
     };
 
     mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    return () => {
+      ignore = true;
+      mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    };
   }, []);
 
   function handleToggle(id) {
@@ -34,7 +54,9 @@ export default function App() {
   }
 
   function temaInitiala() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   }
 
   function handleTema() {
@@ -65,11 +87,20 @@ export default function App() {
               {comenzi.length} comenzi, dintre care {active} nelivrate
             </p>
           </div>
-          <OrderList
-            comenzi={comenzi}
-            onToggle={handleToggle}
-            onDelete={handleDelete}
-          />
+          {loading && <p className="info">Se încarcă...</p>}
+          {error && (
+            <p className="error">
+              Nu am putut încărca datele: {error}. Rulează{" "}
+              <code>npm run api</code>?
+            </p>
+          )}
+          {!loading && !error && (
+            <OrderList
+              comenzi={comenzi}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+            />
+          )}
         </section>
       </main>
     </>

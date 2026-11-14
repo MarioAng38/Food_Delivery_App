@@ -18,20 +18,25 @@ Sample data used across all stages:
 1. Pizza Margherita x2, active, CARD_ONLINE
 2. Sushi Platter (24 pcs), done, CASH_ON_DELIVERY
 3. Double Cheeseburger + Fries, active, APPLE_PAY
+4. Chicken Wrap Combo, active, CASH_ON_DELIVERY
+5. Vegetarian Ramen, done, CARD_ONLINE
 
 ## How to run
 
 cd frontend
 npm install
+npm run api
+In a second terminal:
 npm run dev
 Then open the address printed in the terminal (http://localhost:5173).
 
 ## AI usage
 
-| Tool        | Used for                       |
-| ----------- | ------------------------------ |
-| Claude Code | Stage 1: CSS mockup            |
-| Claude Code | Stage 2: javascript data logic |
+| Tool           | Used for                               |
+| -------------- | -------------------------------------- |
+| Claude Code    | Stage 1: CSS mockup                    |
+| Claude Code    | Stage 2: javascript data logic         |
+| GitHub Copilot | Stage 6: API loading and documentation |
 
 Details per stage: see the ai-log/ folder.
 
@@ -42,7 +47,7 @@ Details per stage: see the ai-log/ folder.
 - [x] Stage 3: The app now lives in `frontend/`, built with Vite. The data from stage 2 moved into the main component; the list is still printed raw.
 - [x] Stage 4: The order list is rendered from data through reusable `OrderList` and `OrderCard` components.
 - [x] Stage 5: local state and events
-- [ ] Stage 6: loading data from a mock API
+- [x] Stage 6: loading data from a mock API
 
 ## Stage 4: components
 
@@ -75,3 +80,43 @@ which is what stage 6 and stage 10 fix.
 | S5-R6 | Light/dark toggle uses state and `data-theme`       | [`App.jsx#L14-L24`](./frontend/src/App.jsx#L14-L24), [`App.jsx#L36-L55`](./frontend/src/App.jsx#L36-L55), [`App.css#L23-L65`](./frontend/src/App.css#L23-L65) | Toggle the button with both system color-scheme settings |
 | S5-R7 | No console warnings; README and AI log documented   | [`README.md#stage-5-local-state-and-events`](./README.md#stage-5-local-state-and-events), [`etapa-05.md`](./ai-log/etapa-05.md)                               | Check DevTools Console and read both documents           |
 | S5-R8 | “Stage 5” commit pushed                             | [`db387fe`](https://github.com/MarioAng38/Food_Delivery_App/commit/db387fe148325f4286d78a0d54669472a67e2363)                                                  | Check commit history                                     |
+
+## Stage 6: loading data from a mock API
+
+Orders are served by json-server from `frontend/db.json`. The app requests
+`/initialComenzi` on mount and displays loading, success, or error feedback.
+Checking and deleting orders still update local state only; persistence is
+planned for Stage 7.
+
+Run the API and app in separate terminals from the repository root:
+
+```sh
+cd frontend
+npm run api
+```
+
+```sh
+cd frontend
+npm run dev
+```
+
+The API is available at http://localhost:3001/initialComenzi. Set
+`VITE_API_URL` in `frontend/.env` to override the default API address.
+
+| ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                      |
+| ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/initialComenzi`          |
+| S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx#L5-L8`](./frontend/src/App.jsx#L5-L8), [`api.js`](./frontend/src/api.js)                                                          | Read the initial state and API call               |
+| S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx#L7-L7`](./frontend/src/App.jsx#L7-L7), [`App.jsx#L90-L90`](./frontend/src/App.jsx#L90-L90)                                        | Start API with `--delay 4000`                     |
+| S6-R4 | API failures show an actionable error             | [`App.jsx#L91-L96`](./frontend/src/App.jsx#L91-L96)                                                                                         | Stop the API and refresh                          |
+| S6-R5 | Fetch is centralized and API URL is configurable  | [`api.js`](./frontend/src/api.js), [`.env.example`](./frontend/.env.example)                                                                | Search for `fetch`; only `api.js` should match    |
+| S6-R6 | README checklist and AI log are present           | [`README.md#stage-6-loading-data-from-a-mock-api`](./README.md#stage-6-loading-data-from-a-mock-api), [`etapa-06.md`](./ai-log/etapa-06.md) | Read the stage section and AI log                 |
+| S6-R7 | Stage 6 commit is published on GitHub             | Pending                                                                                                                                     | Not performed; commit and push were not requested |
+
+- [x] S6-R1 API starts and its resource route returns JSON
+- [x] S6-R2 Orders are not hard-coded in React
+- [x] S6-R3 Loading feedback is rendered while waiting
+- [x] S6-R4 An actionable error is rendered when the API is unavailable
+- [x] S6-R5 Fetch is in `api.js` and the API URL can be configured
+- [x] S6-R6 README Stage 6 section and AI log are complete
+- [ ] S6-R7 Stage 6 commit is published on GitHub
