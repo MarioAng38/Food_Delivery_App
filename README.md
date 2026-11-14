@@ -146,6 +146,7 @@ shown in the form or beside the order list.
 | S7-R3 | Deleting an order persists through the API     | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                                                                                                  | Delete an order, then reload                 |
 | S7-R4 | Stable test IDs match the selector contract    | [`OrderCard.tsx`](./frontend/src/components/OrderCard.tsx), [`OrderList.tsx`](./frontend/src/components/OrderList.tsx), [`OrderForm.tsx`](./frontend/src/components/OrderForm.tsx), [`App.jsx`](./frontend/src/App.jsx) | Inspect the rendered DOM or query by test ID |
 | S7-R5 | Stage implementation and validation are logged | [`etapa-07.md`](./ai-log/etapa-07.md)                                                                                                                                                                                   | Read the AI log and validation results       |
+| S7-R5 | Stage 7 commit is published on GitHub          | [`10a45ba`](https://github.com/MarioAng38/Food_Delivery_App/commit/10a45ba7c146d422b313f6f907da2fb95f89b4b6)                                                                                                            | Check commit history                         |
 
 ### Test IDs
 
