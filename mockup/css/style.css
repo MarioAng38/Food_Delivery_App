@@ -11,6 +11,30 @@
   --muted: #6b6b6b;
   --line: #ececec;
   --bg: #ffffff;
+  --card: #ffffff;
+  --chip-hover: #c9ece2;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --mint-text: var(--green-dark);
+}
+
+/* dark theme, following the system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --green: #287a5e;
+    --green-dark: #20664e;
+    --mint: #35483b;
+    --cream: #4a402d;
+    --brown: #f0d18a;
+    --text: #f5f0e5;
+    --muted: #c4bcad;
+    --line: #4b463c;
+    --bg: #25231f;
+    --card: #302d27;
+    --chip-hover: #415747;
+    --shadow: none;
+    --mint-text: #cdeee2;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -32,6 +56,7 @@ body {
   gap: 12px;
   padding: 40px 32px 120px;
   background: var(--yellow);
+  color: #1f1f1f;
   border-radius: 0 0 50% 50% / 0 0 60px 60px;
 }
 .topbar h1 {
@@ -49,34 +74,36 @@ body {
   font-size: 0.9rem;
 }
 
+/* two columns on desktop: form on the left, list on the right */
 .container {
-  max-width: 760px;
+  max-width: 1000px;
   margin: -80px auto 48px;
   padding: 0 16px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: start;
   gap: 24px;
 }
 
 .card {
-  background: #fff;
+  background: var(--card);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
 }
 .card h2 { margin: 0 0 16px; font-size: 1.4rem; font-weight: 900; }
 
 .order-form {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr;
   gap: 10px;
 }
-.order-form input[type="text"] { grid-column: 1 / -1; }
 
 input[type="text"], select {
   padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--card);
   color: var(--text);
   font: inherit;
 }
@@ -98,6 +125,15 @@ button {
 }
 button:hover { background: var(--green-dark); }
 
+/* visible focus for keyboard navigation (Tab) */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 2px;
+}
+
 .list-header {
   display: flex;
   justify-content: space-between;
@@ -112,10 +148,10 @@ button:hover { background: var(--green-dark); }
 .chip {
   padding: 6px 14px;
   background: var(--mint);
-  color: var(--green-dark);
+  color: var(--mint-text);
   font-weight: 700;
 }
-.chip:hover { background: #c9ece2; }
+.chip:hover { background: var(--chip-hover); }
 .chip.active { background: var(--green); color: #fff; }
 
 .order-list { list-style: none; margin: 0; padding: 0; }
@@ -139,11 +175,12 @@ button:hover { background: var(--green-dark); }
   border-radius: 8px;
 }
 .tag { background: var(--cream); color: var(--brown); }
-.restaurant { background: var(--mint); color: var(--green-dark); }
+.restaurant { background: var(--mint); color: var(--mint-text); }
 
 .summary { margin: 12px 0 0; color: var(--muted); font-size: 0.9rem; }
 
-@media (max-width: 560px) {
+/* one column below 700px */
+@media (max-width: 700px) {
   .topbar { padding: 24px 16px 100px; }
-  .order-form { grid-template-columns: 1fr; }
+  .container { grid-template-columns: 1fr; }
 }

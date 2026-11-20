@@ -6,7 +6,7 @@
 
 ## Conversations
 
-- <share link> (generating the stage 1 static mockup from the ProiectBD database project, restyling it, setting up git)
+- Claude Code desktop session, not shared (generating the stage 1 static mockup from the ProiectBD database project, restyling it, setting up git)
 
 ## Key requests
 
@@ -26,3 +26,8 @@
 
 A visual reference screenshot gets a much closer result than describing the style in words.
 The AI could not preview the page in its built-in browser, so the styling had to be checked manually in a normal browser.
+
+## Later fix (stage 8 review)
+
+- Asked: check the mockup against the stage 1 checklist and fix what was missing.
+- Got: two columns on desktop and one below 700px, a dark theme that follows the system setting, and a visible `:focus-visible` outline. Colors now come from variables.
