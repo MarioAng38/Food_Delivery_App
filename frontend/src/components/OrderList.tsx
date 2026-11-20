@@ -1,4 +1,5 @@
 import OrderCard, { type Order } from "./OrderCard.tsx";
+import styles from "./OrderList.module.css";
 
 type OrderListProps = {
   comenzi: Order[];
@@ -20,7 +21,7 @@ export default function OrderList({
   }
 
   return (
-    <ul className="order-list">
+    <ul className={styles.list}>
       {comenzi.map((comanda) => (
         <OrderCard
           key={comanda.id}

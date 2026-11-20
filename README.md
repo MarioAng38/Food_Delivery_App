@@ -41,12 +41,13 @@ Then open the address printed in the terminal (http://localhost:5173).
 
 ## AI usage
 
-| Tool           | Used for                               |
-| -------------- | -------------------------------------- |
-| Claude Code    | Stage 1: CSS mockup                    |
-| Claude Code    | Stage 2: javascript data logic         |
-| GitHub Copilot | Stage 6: API loading and documentation |
-| GitHub Copilot | Stage 7: Validation and test IDs       |
+| Tool           | Used for                                        |
+| -------------- | ----------------------------------------------- |
+| Claude Code    | Stage 1: CSS mockup                             |
+| Claude Code    | Stage 2: javascript data logic                  |
+| GitHub Copilot | Stage 6: API loading and documentation          |
+| GitHub Copilot | Stage 7: Validation and test IDs                |
+| Claude Code    | Stage 8: Validation for routing and CSS Modules |
 
 Details per stage: see the ai-log/ folder.
 
@@ -59,6 +60,7 @@ Details per stage: see the ai-log/ folder.
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
 - [x] Stage 7: validated order form and API persistence
+- [x] Stage 8: routing, detail page, and CSS Modules
 
 ## Stage 4: components
 
@@ -116,7 +118,7 @@ The API is available at http://localhost:3001/comenzi. Set
 
 | ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                   |
 | ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/comenzi`       |
+| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/comenzi`              |
 | S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                      | Read the initial state and API call            |
 | S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Start API with `--delay 4000`                  |
 | S6-R4 | API failures show an actionable error             | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Stop the API and refresh                       |
@@ -174,3 +176,55 @@ shown in the form or beside the order list.
 - [x] S7-R3 Deletions persist through the API
 - [x] S7-R4 Test IDs follow the selector contract
 - [x] S7-R5 README and AI log document the implementation
+
+## Stage 8: routing and detail page
+
+Three pages behind React Router: the order list at `/`, a detail page at
+`/comenzi/:id`, and an about page at `/despre`, plus a 404 page for any other
+address. The header, navigation, and footer are written once in `Layout`, which
+renders the current page through `Outlet`. Each order title is a link to its
+detail page. Component and page styles moved to CSS Modules; `index.css` keeps
+only the color variables, base elements, and shared classes (`panel`,
+`btn-danger`, `info`, `error`). Fixed values and their labels live in
+`constants.js`.
+
+| ID    | Requirement                                                   | Where (permalink)                                                                                                                                                                                                                                                                | How to check                              |
+| ----- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| S8-R1 | Header navigation changes the page without a reload           | [`App.jsx#L10-L17`](./frontend/src/App.jsx#L10-L17), [`Layout.jsx#L40-L59`](./frontend/src/components/Layout.jsx#L40-L59)                                                                                                                                                        | Click the header links and watch Network  |
+| S8-R2 | Clicking an order opens its detail page                       | [`OrderCard.tsx#L42-L48`](./frontend/src/components/OrderCard.tsx#L42-L48), [`OrderDetaliuPage.jsx`](./frontend/src/pages/OrderDetaliuPage.jsx)                                                                                                                                  | Click an order title                      |
+| S8-R3 | Refresh on the detail URL works; a missing id shows an error  | [`OrderDetaliuPage.jsx#L13-L48`](./frontend/src/pages/OrderDetaliuPage.jsx#L13-L48)                                                                                                                                                                                              | Refresh `/comenzi/1`, open `/comenzi/999` |
+| S8-R4 | An unknown URL shows the app 404 page                         | [`App.jsx#L15`](./frontend/src/App.jsx#L15), [`NotFoundPage.jsx`](./frontend/src/pages/NotFoundPage.jsx)                                                                                                                                                                         | Open `/ceva`                              |
+| S8-R5 | Each component has its `.module.css`; `index.css` only shared | [`src/components`](./frontend/src/components), [`src/pages`](./frontend/src/pages), [`index.css`](./frontend/src/index.css)                                                                                                                                                      | Read the files                            |
+| S8-R6 | Test IDs from tables 7.3 and 8.2; detail route `/comenzi/:id` | [`Layout.jsx#L40`](./frontend/src/components/Layout.jsx#L40), [`OrderCard.tsx#L28-L64`](./frontend/src/components/OrderCard.tsx#L28-L64), [`OrderDetaliuPage.jsx`](./frontend/src/pages/OrderDetaliuPage.jsx), [`NotFoundPage.jsx#L5`](./frontend/src/pages/NotFoundPage.jsx#L5) | `querySelector` in the console            |
+| S8-R7 | README Stage 8 section and AI log                             | [`README.md#stage-8-routing-and-detail-page`](./README.md#stage-8-routing-and-detail-page), [`etapa-08.md`](./ai-log/etapa-08.md)                                                                                                                                                | Read both documents                       |
+| S8-R8 | "Stage 8" commit pushed                                       | _add the commit link after pushing_                                                                                                                                                                                                                                              | Check commit history                      |
+
+### Test IDs added in Stage 8
+
+`item-link` replaces `item-title` on the order card; all other Stage 7 test IDs
+stay on the same elements.
+
+| Test ID            | Element                                    | Component          |
+| ------------------ | ------------------------------------------ | ------------------ |
+| `nav`              | Header navigation                          | `Layout`           |
+| `item-link`        | Order title, now a link to the detail page | `OrderCard`        |
+| `detail`           | Detail section, after loading              | `OrderDetaliuPage` |
+| `detail-title`     | Order name on the detail page              | `OrderDetaliuPage` |
+| `error`, `loading` | Detail page messages                       | `OrderDetaliuPage` |
+| `not-found`        | Page for unknown addresses                 | `NotFoundPage`     |
+
+Console checks:
+
+```js
+document.querySelectorAll("[data-testid=nav] a").length; // 2
+document.querySelector("[data-testid=detail-title]").textContent; // on /comenzi/1
+```
+
+- [x] S8-R1 Header navigation changes the page without a reload
+- [x] S8-R2 Clicking an order opens its detail page with the correct data
+- [x] S8-R3 Refreshing the detail URL works, and a missing id shows an error
+- [x] S8-R4 An unknown address shows the app 404 page
+- [x] S8-R5 Each component has its own `.module.css`, and `index.css` holds only shared styles
+- [x] S8-R6 Test IDs from tables 7.3 and 8.2 are present, and the detail route is `/comenzi/:id`
+- [x] S8-R7 README Stage 8 section and `ai-log/etapa-08.md` are complete
+- [ ] S8-R8 Stage 8 commit is published on GitHub

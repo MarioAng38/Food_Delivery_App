@@ -1,0 +1,19 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Etapa 7: buton dezactivat cât timp se trimite */
+.form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.form input[aria-invalid="true"] {
+  border-color: var(--mare);
+}

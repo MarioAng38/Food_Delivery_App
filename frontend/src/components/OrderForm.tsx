@@ -1,13 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { Order } from "./OrderCard.tsx";
-
-const PAYMENT_METHODS = [
-  { value: "CARD_ONLINE", label: "Card Online" },
-  { value: "CASH_ON_DELIVERY", label: "Cash on Delivery" },
-  { value: "APPLE_PAY", label: "Apple Pay" },
-];
-
-const QUANTITY_MIN = 1;
+import { PAYMENT_METHODS, QUANTITY_MIN } from "../constants.js";
+import styles from "./OrderForm.module.css";
 
 type OrderFormProps = {
   onAdd: (comanda: Omit<Order, "id">) => Promise<void>;
@@ -75,7 +69,7 @@ export default function OrderForm({ onAdd }: OrderFormProps) {
 
   return (
     <form
-      className="order-form"
+      className={styles.form}
       onSubmit={handleSubmit}
       noValidate
       data-testid="form"

@@ -1,5 +1,4 @@
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
-const COMENZI_RESOURCE = "/comenzi";
+import { API_URL, COMENZI_RESOURCE } from "./constants.js";
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {
@@ -16,6 +15,10 @@ async function request(path, options = {}) {
 
 export function fetchComenzi() {
   return request(COMENZI_RESOURCE);
+}
+
+export function fetchComanda(id) {
+  return request(`${COMENZI_RESOURCE}/${id}`);
 }
 
 export function createComanda(comanda) {

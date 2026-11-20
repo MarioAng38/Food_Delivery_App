@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom";
+import { ETICHETE_PAYMENT_METHOD } from "../constants.js";
+import styles from "./OrderCard.module.css";
+
 export type Order = {
   id: number;
   name: string;
@@ -20,26 +24,38 @@ export default function OrderCard({
 }: OrderCardProps) {
   return (
     <li
-      className={comanda.delivered ? "order done" : "order"}
+      className={
+        comanda.delivered ? `${styles.card} ${styles.done}` : styles.card
+      }
       data-testid="item"
       data-id={comanda.id}
     >
-      <label className="comanda-main">
+      <div className={styles.main}>
         <input
           type="checkbox"
           checked={comanda.delivered}
           onChange={() => onToggle(comanda.id)}
+          aria-label={`Marchează ${comanda.name}`}
           data-testid="item-toggle"
         />
-        <span className="name" data-testid="item-title">
-          {comanda.name}
-        </span>
-      </label>
-      <span className="tag">
-        {comanda.delivered ? "Livrată" : "În livrare"}
-      </span>
-      <span className="restaurant">{comanda.restaurant}</span>
-      <span className="tag">{comanda.payment_method}</span>
+        <div>
+          <Link
+            to={`/comenzi/${comanda.id}`}
+            className={styles.title}
+            data-testid="item-link"
+          >
+            {comanda.name}
+          </Link>
+          <span className={styles.tag}>
+            {comanda.delivered ? "Livrată" : "În livrare"}
+          </span>
+          <span className={styles.restaurant}>{comanda.restaurant}</span>
+          <span className={styles.tag}>
+            {ETICHETE_PAYMENT_METHOD[comanda.payment_method] ??
+              comanda.payment_method}
+          </span>
+        </div>
+      </div>
       <button
         type="button"
         className="btn-danger"
