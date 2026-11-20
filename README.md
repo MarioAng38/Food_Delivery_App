@@ -95,7 +95,7 @@ which is what stage 6 and stage 10 fix.
 ## Stage 6: loading data from a mock API
 
 Orders are served by json-server from `frontend/db.json`. The app requests
-`/initialComenzi` on mount and displays loading, success, or error feedback.
+`/comenzi` on mount and displays loading, success, or error feedback.
 Stage 7 adds order creation, delivery updates, and deletion through the same
 API resource; those changes persist across reloads.
 
@@ -111,12 +111,12 @@ cd frontend
 npm run dev
 ```
 
-The API is available at http://localhost:3001/initialComenzi. Set
+The API is available at http://localhost:3001/comenzi. Set
 `VITE_API_URL` in `frontend/.env` to override the default API address.
 
 | ID    | Requirement                                       | Where (permalink)                                                                                                                           | How to check                                   |
 | ----- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/initialComenzi`       |
+| S6-R1 | `npm run api` serves JSON from the resource route | [`package.json#L11`](./frontend/package.json#L11), [`db.json`](./frontend/db.json)                                                          | Start the API and open `/comenzi`       |
 | S6-R2 | Orders are loaded instead of hard-coded in React  | [`App.jsx`](./frontend/src/App.jsx), [`api.js`](./frontend/src/api.js)                                                                      | Read the initial state and API call            |
 | S6-R3 | Loading feedback appears while awaiting the API   | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Start API with `--delay 4000`                  |
 | S6-R4 | API failures show an actionable error             | [`App.jsx`](./frontend/src/App.jsx)                                                                                                         | Stop the API and refresh                       |
@@ -135,7 +135,7 @@ The API is available at http://localhost:3001/initialComenzi. Set
 ## Stage 7: order form and API persistence
 
 The order form validates the title, quantity, and restaurant before creating
-an order. Create, delivery updates, and deletion use the `/initialComenzi`
+an order. Create, delivery updates, and deletion use the `/comenzi`
 resource, so successful changes remain after a page reload. API failures are
 shown in the form or beside the order list.
 

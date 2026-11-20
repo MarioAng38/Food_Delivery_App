@@ -1,8 +1,7 @@
 {
   "resource": "comenzi",
-  "title": "nume",
+  "title": "name",
   "done": "delivered",
-  "quantity": "cantitate",
   "sample": {
     "payment_method": "CASH_ON_DELIVERY",
     "restaurant": "Pizza Napoli"
