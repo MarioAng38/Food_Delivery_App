@@ -197,7 +197,7 @@ only the color variables, base elements, and shared classes (`panel`,
 | S8-R5 | Each component has its `.module.css`; `index.css` only shared | [`src/components`](./frontend/src/components), [`src/pages`](./frontend/src/pages), [`index.css`](./frontend/src/index.css)                                                                                                                                                      | Read the files                            |
 | S8-R6 | Test IDs from tables 7.3 and 8.2; detail route `/comenzi/:id` | [`Layout.jsx#L40`](./frontend/src/components/Layout.jsx#L40), [`OrderCard.tsx#L28-L64`](./frontend/src/components/OrderCard.tsx#L28-L64), [`OrderDetaliuPage.jsx`](./frontend/src/pages/OrderDetaliuPage.jsx), [`NotFoundPage.jsx#L5`](./frontend/src/pages/NotFoundPage.jsx#L5) | `querySelector` in the console            |
 | S8-R7 | README Stage 8 section and AI log                             | [`README.md#stage-8-routing-and-detail-page`](./README.md#stage-8-routing-and-detail-page), [`etapa-08.md`](./ai-log/etapa-08.md)                                                                                                                                                | Read both documents                       |
-| S8-R8 | "Stage 8" commit pushed                                       | _add the commit link after pushing_                                                                                                                                                                                                                                              | Check commit history                      |
+| S8-R8 | "Stage 8" commit pushed                                       | [`86a49bf`](https://github.com/MarioAng38/Food_Delivery_App/commit/86a49bf78a8a5092de80f18bfd824b52e39a7353)                                                                                                                                                                     | Check commit history                      |
 
 ### Test IDs added in Stage 8
 
@@ -227,4 +227,4 @@ document.querySelector("[data-testid=detail-title]").textContent; // on /comenzi
 - [x] S8-R5 Each component has its own `.module.css`, and `index.css` holds only shared styles
 - [x] S8-R6 Test IDs from tables 7.3 and 8.2 are present, and the detail route is `/comenzi/:id`
 - [x] S8-R7 README Stage 8 section and `ai-log/etapa-08.md` are complete
-- [ ] S8-R8 Stage 8 commit is published on GitHub
+- [x] S8-R8 Stage 8 commit is published on GitHub
